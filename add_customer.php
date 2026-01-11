@@ -1,13 +1,14 @@
-<?php
+<<?php
 include 'db.php';
 
-$name = $_POST['name'];
-$email = $_POST['email'];
-$phone = $_POST['phone'];
-$address = $_POST['address'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name  = $_POST['name'];
+    $email = $_POST['email'];
 
-$conn->query("INSERT INTO customers(name,email,phone,address)
-VALUES('$name','$email','$phone','$address')");
+    $query = "INSERT INTO customers (name, email) VALUES ($1, $2)";
+    pg_query_params($conn, $query, array($name, $email));
 
-echo "Customer Added Successfully";
+    echo "Customer Added Successfully!";
+}
 ?>
+
